@@ -1,0 +1,6 @@
+{
+    "1": {"path": "0001__hello_world.md", "title": "Разъеб \"Hello world\""},
+    "2": {"path": "0002__types.md", "title": "Int, float, double и прочий зоопарк"},
+    "3": {"path": "0003__arrays_and_strings.md", "title": "Пока не оцифровал..."},
+    "4": {"path": "0004__address_arithmetic.md", "title": "Пока не оцифровал..."}
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Пацанская прога</title>
+        <link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+        <link type="Image/x-icon" href="favicon.ico" rel="icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+
+        <!-- MathJax script -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <!-- markdown-it library for Markdown -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.2.0/markdown-it.min.js"></script>
+        <!-- Highlight.js for syntax highlighting -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+        <!-- jQuery library for simplicity -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo">
+                <h1>Пацанская прога</h1>
+                <button class="menu-btn" onclick="openNav()">☰</button>
+            </div>
+            
+            <nav>
+                <button onclick="location.href='index.html'">Главная</button>
+                <button onclick="location.href='articles.html'">Рубрикатор</button>
+                <button onclick="location.href='about.html'">Прочее</button>
+            </nav>
+        </header>
+    
+        <div id="myOffcanvas" class="offcanvas">
+            <button class="close-btn" onclick="closeNav()">×</button>
+            <a href="index.html">Главная</a>
+            <a href="articles.html">Рубрикатор</a>
+            <a href="about.html">Прочее</a>
+        </div>
+    
+        <script>
+            function openNav() {
+                document.getElementById("myOffcanvas").style.left = "0";
+            }
+        
+            function closeNav() {
+                document.getElementById("myOffcanvas").style.left = "-250px";
+            }
+        </script>
+
+        <div id="markdown"></div>
+        <script>
+            // Function to load Markdown content from file
+            function loadMarkdownFromFile(filePath, callback) 
+            {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() 
+                {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
+                    {
+                        callback(xhr.responseText);
+                    }
+                };
+                xhr.open("GET", filePath, true);
+                xhr.send();
+            }
+
+            var article_path = window.location.search.replace('?', '');
+
+            // Load Markdown content from file
+            loadMarkdownFromFile("articles/" + article_path, function(markdownContent)
+            {
+                // Initialize markdown-it with syntax highlighting
+                var md = window.markdownit({ highlight: function (str, lang) 
+                {
+                    if (lang && hljs.getLanguage(lang)) 
+                    {
+                        try 
+                        {
+                            return '<pre class="hljs"><code>' +
+                                hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                                '</code></pre>';
+                        } 
+                        catch (__) 
+                        {}
+                    }
+
+                    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+                }});
+
+                // Convert Markdown to HTML using markdown-it
+                var htmlContent = md.render(markdownContent);
+
+                // Display HTML content
+                $('#markdown').html(htmlContent);
+
+                // Tell MathJax to reprocess the rendered content
+                MathJax.typeset();
+            });
+        </script>
+
+        <footer>
+            <a href="https://t.me/+osWqEEfNA5Y2ZWYy">Пацанская прога в Telegram</a>
+        </footer>
+    </body>
+</html>
