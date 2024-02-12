@@ -73,6 +73,11 @@
             // Load Markdown content from file
             loadMarkdownFromFile("articles/" + article_path, function(markdownContent)
             {
+                let preparedMarkdownContent = markdownContent;
+                let pictures = preparedMarkdownContent.matchAll(/[\w\/]+?.(?:jpg|png)/g);
+                for (let pic of pictures)
+                    preparedMarkdownContent = preparedMarkdownContent.replace(pic, 'articles/introduction/' + pic);
+
                 // Initialize markdown-it with syntax highlighting
                 var md = window.markdownit({ highlight: function (str, lang) 
                 {
@@ -92,7 +97,7 @@
                 }});
 
                 // Convert Markdown to HTML using markdown-it
-                var htmlContent = md.render(markdownContent);
+                var htmlContent = md.render(preparedMarkdownContent);
 
                 // Display HTML content
                 $('#markdown').html(htmlContent);
