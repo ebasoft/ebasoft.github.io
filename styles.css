@@ -411,3 +411,9 @@ pre code.hljs
         display: flex;
     }
 }
+
+.picture-subscript
+{
+    text-align: center;
+    color: #888888;
+}

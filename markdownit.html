@@ -112,6 +112,12 @@
                 // Convert Markdown to HTML using markdown-it
                 var htmlContent = md.render(preparedMarkdownContent);
 
+                const picture_re = /<p><img src="[\w\W]+?" alt="[\w\W]+?" title="([\w\W]+?)"><\/p>/g;
+                let found_pictures = htmlContent.matchAll(picture_re);
+
+                for (let picture of found_pictures)
+                    htmlContent = htmlContent.replace(picture[0], `${picture[0]}<p class="picture-subscript">${picture[1]}</p>`);
+
                 // Display HTML content
                 $('#markdown').html(htmlContent);
 
