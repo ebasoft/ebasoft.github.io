@@ -53,6 +53,19 @@
 
         <div id="markdown"></div>
         <script>
+            function parseGETParameters() 
+            {
+                var query = window.location.search.substring(1); // Get query string without the '?'
+                var pairs = query.split("&"); // Split query string into key-value pairs
+                var parameters = {};
+                for (var i = 0; i < pairs.length; i++) 
+                {
+                    var pair = pairs[i].split("="); // Split key-value pair
+                    parameters[pair[0]] = decodeURIComponent(pair[1]); // Decode URI component and store as key-value pair
+                }
+                return parameters;
+            }
+
             // Function to load Markdown content from file
             function loadMarkdownFromFile(filePath, callback) 
             {
@@ -68,15 +81,15 @@
                 xhr.send();
             }
 
-            var article_path = window.location.search.replace('?', '');
+            var params = parseGETParameters();
 
             // Load Markdown content from file
-            loadMarkdownFromFile("articles/" + article_path, function(markdownContent)
+            loadMarkdownFromFile(`articles/${params["section"]}/${params["article"]}`, function(markdownContent)
             {
                 let preparedMarkdownContent = markdownContent;
                 let pictures = preparedMarkdownContent.matchAll(/[\w\/]+?.(?:jpg|png)/g);
                 for (let pic of pictures)
-                    preparedMarkdownContent = preparedMarkdownContent.replace(pic, 'articles/introduction/' + pic);
+                    preparedMarkdownContent = preparedMarkdownContent.replace(pic, `articles/${params["section"]}/${pic}`);
 
                 // Initialize markdown-it with syntax highlighting
                 var md = window.markdownit({ highlight: function (str, lang) 

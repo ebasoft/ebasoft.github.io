@@ -74,7 +74,7 @@
                         {
                             const listItem = document.createElement('li');
                             const link = document.createElement('a');
-                            link.href = `markdownit?${section_info["path"]}/${article_info["path"]}`;
+                            link.href = `markdownit?section=${section_info["path"]}&article=${article_info["path"]}`;
                             link.textContent = article_info["title"];
                             listItem.appendChild(link);
                             article_list.appendChild(listItem);
