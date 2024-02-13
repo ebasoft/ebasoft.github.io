@@ -22,8 +22,8 @@
     <body id="sliding-body">
         <header>
             <div class="logo-container">
-                <img src="logo.png" alt="Logo" class="logo">
-                <h1>Пацанская прога</h1>
+                <img src="logo.png" alt="Logo" class="logo" onclick="barrelRoll()">
+                <h1 onclick="location.href='index'">Пацанская прога</h1>
                 <button id="menu-btn" class="menu-btn" onclick="toggleNav()">
                     <div></div>
                     <div></div>
@@ -45,25 +45,73 @@
         </div>
     
         <script>
+
+            let counter = 0;
+            const barrel_dropper = 10;
+
             function toggleNav() {
                 let canvas = document.getElementById("myOffcanvas");
                 let body = document.getElementById("sliding-body");
 
-                if (canvas.classList.contains("closed"))
+                if (body.style.transform == "")
                 {
-                    canvas.style.left = "0";
-                    canvas.classList.remove("closed");
-                    body.style.left = "250px";
+                    if (canvas.classList.contains("closed"))
+                    {
+                        body.style.position = "fixed";
+                        canvas.style.left = "0";
+                        canvas.classList.remove("closed");
+                        body.style.left = "250px";
+                    }
+                    else
+                    {
+                        body.style.position = "relative";
+                        canvas.style.left = "-250px";
+                        canvas.classList.add("closed");
+                        body.style.left = "0";
+                    }
                 }
+
                 else
                 {
-                    canvas.style.left = "-250px";
-                    canvas.classList.add("closed");
-                    body.style.left = "0";
+                    if (canvas.classList.contains("closed"))
+                    {
+                        body.style.position = "fixed";
+                        canvas.style.left = "-250px";
+                        canvas.classList.remove("closed");
+                        body.style.left = "-250px";
+                    }
+                    else
+                    {
+                        body.style.position = "relative";
+                        canvas.style.left = "-250px";
+                        canvas.classList.add("closed");
+                        body.style.left = "0";
+                    }
                 }
 
                 const menuBtn = document.querySelector('.menu-btn');
                 menuBtn.classList.toggle('open');
+            }
+
+            function barrelRoll() {
+                let body = document.getElementById("sliding-body");
+                if (body.style.transform == "")
+                {
+                    counter += 1;
+                    if (counter >= barrel_dropper) 
+                    {
+                        body.style.transform = "rotate(180deg)";
+                        setTimeout(() => 
+                        {
+                            alert('Тьфу блять')
+                        }, 500)
+                    }
+                }
+                else
+                {
+                    counter -= 1;
+                    if (counter <= 0) body.style.transform = "";
+                }
             }
         </script>
 
