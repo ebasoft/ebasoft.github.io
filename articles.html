@@ -6,12 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
     </head>
-    <body>
+    <body id="sliding-body">
         <header>
             <div class="logo-container">
                 <img src="logo.png" alt="Logo" class="logo">
                 <h1>Пацанская прога</h1>
-                <button class="menu-btn" onclick="openNav()">☰</button>
+                <button id="menu-btn" class="menu-btn" onclick="toggleNav()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </button>
             </div>
             
             <nav>
@@ -21,20 +25,32 @@
             </nav>
         </header>
     
-        <div id="myOffcanvas" class="offcanvas">
-            <button class="close-btn" onclick="closeNav()">×</button>
+        <div id="myOffcanvas" class="offcanvas closed">
             <a href="index">Главная</a>
             <a href="articles">Рубрикатор</a>
             <a href="about">Прочее</a>
         </div>
     
         <script>
-            function openNav() {
-                document.getElementById("myOffcanvas").style.left = "0";
-            }
-        
-            function closeNav() {
-                document.getElementById("myOffcanvas").style.left = "-250px";
+            function toggleNav() {
+                let canvas = document.getElementById("myOffcanvas");
+                let body = document.getElementById("sliding-body");
+
+                if (canvas.classList.contains("closed"))
+                {
+                    canvas.style.left = "0";
+                    canvas.classList.remove("closed");
+                    body.style.left = "250px";
+                }
+                else
+                {
+                    canvas.style.left = "-250px";
+                    canvas.classList.add("closed");
+                    body.style.left = "0";
+                }
+
+                const menuBtn = document.querySelector('.menu-btn');
+                menuBtn.classList.toggle('open');
             }
         </script>
 
