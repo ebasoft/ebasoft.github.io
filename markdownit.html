@@ -171,9 +171,9 @@
                 for (let pic of pictures)
                     preparedMarkdownContent = preparedMarkdownContent.replace(pic, `articles/${params["section"]}/${pic}`);
 
-                preparedMarkdownContent = preparedMarkdownContent.replace("\\(", "\\\\(");
-                preparedMarkdownContent = preparedMarkdownContent.replace("\\)", "\\\\)");
-                preparedMarkdownContent = preparedMarkdownContent.replace("\\\\", "\\\\\\\\");
+                preparedMarkdownContent = preparedMarkdownContent.replaceAll("\\(", "\\\\(");
+                preparedMarkdownContent = preparedMarkdownContent.replaceAll("\\)", "\\\\)");
+                preparedMarkdownContent = preparedMarkdownContent.replaceAll("\\\\", "\\\\\\\\");
 
                 // Initialize markdown-it with syntax highlighting
                 var md = window.markdownit({ highlight: function (str, lang) 
